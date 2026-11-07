@@ -79,7 +79,8 @@ export function mount(root, ctx) {
   }
 
   function onDown(e) {
-    if (pointerId !== null) return;
+    // Ein neuer erster Finger übernimmt, falls iOS das Loslassen verschluckt hat.
+    if (pointerId !== null && !e.isPrimary) return;
     const p = pointerPos(canvas, e);
     const ball = ballPos(performance.now() / 1000);
     const distance = Math.hypot(p.x - ball.x, p.y - ball.y);

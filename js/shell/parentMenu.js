@@ -45,9 +45,19 @@ export function installParentCorner(root, { getSettings, onChange }) {
     e => {
       e.preventDefault();
       e.stopPropagation();
+      // Mehrere Finger (z. B. ganze Hand eines Kindes) öffnen das Menü nicht.
+      if (e.touches.length > 1) return reset();
       begin();
     },
     { passive: false },
+  );
+  // Berührt währenddessen ein anderer Finger den Bildschirm, gilt der Druck nicht.
+  document.addEventListener(
+    "touchstart",
+    e => {
+      if ((timer || armed) && !corner.contains(e.target)) reset();
+    },
+    { capture: true },
   );
   corner.addEventListener("touchend", finish);
   corner.addEventListener("touchcancel", finish);
@@ -153,6 +163,29 @@ function openMenu(root, getSettings, onChange) {
     ),
   );
 
+  const status = heading("p", "Offline-Status wird geprüft …");
+  panel.appendChild(status);
+  offlineStatus().then(text => {
+    status.textContent = text;
+  });
+
   panel.appendChild(button("done", "Fertig", close));
   root.appendChild(menu);
+}
+
+// Liest den Merker, den der Service Worker nach dem vollständigen Speichern setzt.
+async function offlineStatus() {
+  try {
+    const keys = (await caches.keys()).filter(k => k.startsWith("flugspiel-"));
+    let best = 0;
+    for (const key of keys) {
+      const hit = await (await caches.open(key)).match("./__ready");
+      if (hit) best = Math.max(best, Number(await hit.text()) || 0);
+    }
+    if (best && navigator.serviceWorker?.controller) return `✅ Offline bereit · Version ${best}`;
+    if (best) return `⏳ Version ${best} gespeichert. App einmal schließen und neu öffnen.`;
+  } catch {
+    // Kein Cache-Zugriff: wie "nicht bereit" behandeln.
+  }
+  return "⚠️ Noch nicht offline bereit. App mit Internet öffnen und 1 Minute warten.";
 }

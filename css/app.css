@@ -49,6 +49,21 @@ html, body {
   overflow: hidden;
 }
 
+/* Querformat: Hinweis zum Drehen statt verzerrter Spiele */
+#rotate {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: var(--sky);
+  place-items: center;
+  font-size: 22vh;
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  #rotate { display: grid; }
+}
+
 /* Sternenregen und Feuerwerk */
 .star {
   position: absolute;
@@ -106,7 +121,7 @@ html, body {
   max-width: 460px;
   max-height: 100%;
   overflow-y: auto;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 .parent-menu h1 { font-size: 24px; margin: 0 0 12px; }

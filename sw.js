@@ -1,5 +1,5 @@
 // Speichert alle Dateien beim ersten Besuch, danach läuft die App offline.
-const VERSION = "18";
+const VERSION = "19";
 const CACHE = `flugspiel-${VERSION}`;
 const ASSETS = [
   "./",
@@ -33,7 +33,12 @@ self.addEventListener("install", event => {
   event.waitUntil(
     caches
       .open(CACHE)
-      .then(cache => cache.addAll(ASSETS.map(url => new Request(url, { cache: "reload" }))))
+      .then(cache =>
+        cache
+          .addAll(ASSETS.map(url => new Request(url, { cache: "reload" })))
+          // Merker: alle Dateien sind gespeichert, die App läuft offline.
+          .then(() => cache.put("./__ready", new Response(VERSION))),
+      )
       .then(() => self.skipWaiting()),
   );
 });
@@ -51,7 +56,7 @@ self.addEventListener("fetch", event => {
   const request = event.request;
   if (request.method !== "GET") return;
   event.respondWith(
-    caches.match(request, { ignoreSearch: true }).then(
+    caches.open(CACHE).then(cache => cache.match(request, { ignoreSearch: true })).then(
       hit =>
         hit ||
         fetch(request).catch(() =>

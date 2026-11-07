@@ -74,14 +74,14 @@ document.addEventListener(
 document.addEventListener("contextmenu", e => e.preventDefault());
 
 // Ton und Wake Lock brauchen eine Berührung.
-document.addEventListener(
-  "pointerdown",
-  () => {
-    effects.unlock();
-    wakeLock.acquire();
-  },
-  { capture: true },
-);
+// Auf iOS zählt erst das Loslassen sicher als Nutzergeste, deshalb mehrere Ereignisse.
+const unlock = () => {
+  effects.unlock();
+  wakeLock.acquire();
+};
+for (const type of ["pointerdown", "pointerup", "touchend"]) {
+  document.addEventListener(type, unlock, { capture: true });
+}
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") wakeLock.acquire();
 });

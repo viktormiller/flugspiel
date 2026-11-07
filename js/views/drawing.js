@@ -102,7 +102,7 @@ export function mount(root, ctx) {
       }
       return;
     }
-    if (p.y >= L.area.y && p.y <= L.area.y + L.area.h) drawing.down(e.pointerId, toNorm(p));
+    if (p.y >= L.area.y && p.y <= L.area.y + L.area.h) drawing.down(e.pointerId, toNorm(p), e.isPrimary);
   }
 
   function onMove(e) {
