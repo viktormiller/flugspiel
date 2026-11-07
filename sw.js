@@ -14,6 +14,8 @@ const ASSETS = [
   "./js/core/rng.js",
   "./js/core/roundLoop.js",
   "./js/core/settings.js",
+  "./js/engines/balloonRace.js",
+  "./js/engines/ballToss.js",
   "./js/shell/effects.js",
   "./js/shell/parentMenu.js",
   "./js/shell/stars.js",
