@@ -1,0 +1,149 @@
+:root {
+  --sky: #bfe6ff;
+  --ink: #1d2b3a;
+  --accent: #ff9f1c;
+  --panel: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  overflow: hidden;
+  background: var(--sky);
+  color: var(--ink);
+  font-family: -apple-system, system-ui, sans-serif;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+#game {
+  position: absolute;
+  inset: 0;
+}
+
+#game canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 40vw;
+}
+
+#overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Sternenregen und Feuerwerk */
+.star {
+  position: absolute;
+  top: -12vw;
+  font-size: 10vw;
+  animation: fall 2.6s ease-in forwards;
+}
+
+@keyframes fall {
+  to { transform: translateY(120vh) rotate(360deg); opacity: 0.6; }
+}
+
+.spark {
+  position: absolute;
+  font-size: 9vw;
+  animation: burst 1.4s ease-out forwards;
+}
+
+@keyframes burst {
+  from { transform: translate(0, 0) scale(0.3); opacity: 1; }
+  to { transform: translate(var(--dx), var(--dy)) scale(1.2); opacity: 0; }
+}
+
+/* Eltern-Ecke und Elternmenü */
+.parent-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(60px + env(safe-area-inset-right));
+  height: calc(60px + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 0;
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  z-index: 10;
+}
+
+.parent-menu {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(29, 43, 58, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(16px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));
+  touch-action: none;
+}
+
+.parent-menu .panel {
+  background: var(--panel);
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 460px;
+  max-height: 100%;
+  overflow-y: auto;
+  touch-action: none;
+}
+
+.parent-menu h1 { font-size: 24px; margin: 0 0 12px; }
+.parent-menu h2 { font-size: 15px; margin: 18px 0 8px; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.7; }
+.parent-menu p { font-size: 15px; line-height: 1.4; margin: 12px 0 0; }
+
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.tile, .choice, .done {
+  font: inherit;
+  border: 2px solid #d5e3ee;
+  border-radius: 14px;
+  background: #f4f9fc;
+  color: var(--ink);
+  padding: 12px;
+}
+
+.tile { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 15px; }
+.tile .icon { font-size: 36px; }
+.tile.active, .choice.active { border-color: var(--accent); background: #fff4e5; }
+
+.choices { display: grid; gap: 8px; }
+.choice { text-align: left; font-size: 16px; }
+
+.toggle { display: flex; align-items: center; justify-content: space-between; font-size: 17px; }
+.toggle input { width: 28px; height: 28px; }
+
+.done {
+  margin-top: 20px;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
