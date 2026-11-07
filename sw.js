@@ -1,5 +1,5 @@
 // Speichert alle Dateien beim ersten Besuch, danach läuft die App offline.
-const VERSION = "13";
+const VERSION = "14";
 const CACHE = `flugspiel-${VERSION}`;
 const ASSETS = [
   "./",
