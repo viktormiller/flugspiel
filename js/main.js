@@ -8,11 +8,13 @@ import { installParentCorner } from "./shell/parentMenu.js";
 
 import { mount as mountBallToss } from "./views/ballToss.js";
 import { mount as mountBalloonRace } from "./views/balloonRace.js";
+import { mount as mountBubbles } from "./views/bubbles.js";
 
 // Spiele, die schon gebaut sind. Fehlende zeigen einen Platzhalter.
 const VIEWS = {
   ballToss: mountBallToss,
   balloonRace: mountBalloonRace,
+  bubbles: mountBubbles,
 };
 
 function mountPlaceholder(root, ctx) {
