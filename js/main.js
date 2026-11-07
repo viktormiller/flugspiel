@@ -6,8 +6,14 @@ import { createStars } from "./shell/stars.js";
 import { createWakeLock } from "./shell/wakeLock.js";
 import { installParentCorner } from "./shell/parentMenu.js";
 
+import { mount as mountBallToss } from "./views/ballToss.js";
+import { mount as mountBalloonRace } from "./views/balloonRace.js";
+
 // Spiele, die schon gebaut sind. Fehlende zeigen einen Platzhalter.
-const VIEWS = {};
+const VIEWS = {
+  ballToss: mountBallToss,
+  balloonRace: mountBalloonRace,
+};
 
 function mountPlaceholder(root, ctx) {
   const el = document.createElement("div");

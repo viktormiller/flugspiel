@@ -3,8 +3,8 @@
 import { catchUpStep } from "../core/catchUp.js";
 
 export const BALLOON = {
-  smallStep: 1 / 150,
-  bigStep: 1 / 70,
+  smallStep: 1 / 100,
+  bigStep: 1 / 50,
   minTapInterval: 1 / 6,
   roundDuration: 120,
   foxLead: 0.08,
