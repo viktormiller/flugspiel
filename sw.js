@@ -1,5 +1,5 @@
 // Speichert alle Dateien beim ersten Besuch, danach läuft die App offline.
-const VERSION = "16";
+const VERSION = "17";
 const CACHE = `flugspiel-${VERSION}`;
 const ASSETS = [
   "./",
@@ -17,6 +17,7 @@ const ASSETS = [
   "./js/engines/balloonRace.js",
   "./js/engines/ballToss.js",
   "./js/engines/bubbles.js",
+  "./js/engines/drawing.js",
   "./js/shell/effects.js",
   "./js/shell/parentMenu.js",
   "./js/shell/stars.js",
@@ -25,6 +26,7 @@ const ASSETS = [
   "./js/views/ballToss.js",
   "./js/views/bubbles.js",
   "./js/views/canvas.js",
+  "./js/views/drawing.js",
 ];
 
 self.addEventListener("install", event => {
